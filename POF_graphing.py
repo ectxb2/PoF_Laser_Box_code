@@ -15,8 +15,8 @@ parser = argparse.ArgumentParser()
 
 # Adding optional argument
 parser.add_argument("-f","--f", help = "Input File name")
-parser.add_argument("-x", '--x', help = "x axis, options:p_opc, I_opc, V_opc, V_laser, I_laser, opc_temp, p_laser, I_driver, V_control, laser_temp, date_time, run_time")
-parser.add_argument("-y", '--y', help = "y axis, options:p_opc, I_opc, V_opc, V_laser, I_laser, opc_temp, p_laser, I_driver, V_control, laser_temp, date_time, run_time")
+parser.add_argument("-x", '--x', help = "x axis, options:p_opc, I_opc, V_opc, V_laser, I_laser, opc_temp, p_laser, I_driver, V_control, laser_temp, date_time, run_time, p_optical")
+parser.add_argument("-y", '--y', help = "y axis, options:p_opc, I_opc, V_opc, V_laser, I_laser, opc_temp, p_laser, I_driver, V_control, laser_temp, date_time, run_time, p_optical")
 
 args = vars(parser.parse_args())
 
@@ -37,8 +37,8 @@ p_laser = info[:,8] ##I dont think this number is the optical power out
 V_opc = info[:,9]
 I_opc = info[:,10]
 p_opc = info[:,11]
-#t = info[]
-    
+p_optical = np.array[I_laser] * 0.9314 - 0.3147
+
     
 for i in x:
 
@@ -90,10 +90,14 @@ for i in x:
         x_var = V_control
         title_x = "Control Voltage"
         axis_x = "Control Voltage (V)"
+    elif x == 'p_optical':
+        x_var = p_optical
+        title_x = "Optical Power"
+        axis_x = "Optial Power (W)"
     else :
         print("invalid input for x axis")
         
-        
+     
     if y == 'p_opc':
         y_var = p_opc
         title_y = "OPC Power"
@@ -138,10 +142,14 @@ for i in x:
         y_var = I_driver
         title_y = "Driver Current"
         axis_x = "Driver Current (A)"
-    elif x == 'V_control':
-        x_var = V_control
-        title_x = "Control Voltage"
-        axis_x = "Control Voltage (V)"
+    elif y == 'V_control':
+        y_var = V_control
+        title_y = "Control Voltage"
+        axis_y = "Control Voltage (V)"
+    elif y == 'p_optical':
+        y_var = p_optical
+        title_y = "Optical Power"
+        axis_y = "Optial Power (W)"
     else :
         print("invalid input for y axis")
         
